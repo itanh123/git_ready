@@ -1,0 +1,112 @@
+@startuml E-Commerce System Use Case Diagram
+
+!define RECTANGLE class
+
+title Hệ thống Bán hàng Trực tuyến - Use Case Diagram
+
+' Actors
+actor "Admin" as admin
+actor "Client" as client  
+actor "Guest" as guest
+
+' Use Cases - Account Management
+rectangle "Quản lý Tài khoản" {
+  usecase "Truy cập hệ thống" as UC1
+  usecase "Đăng ký tài khoản" as UC2
+  usecase "Đăng nhập" as UC3
+  usecase "Đăng xuất" as UC4
+}
+
+' Use Cases - Product Viewing & Search
+rectangle "Xem và Tìm kiếm Sản phẩm" {
+  usecase "Xem danh sách sản phẩm" as UC5
+  usecase "Tìm kiếm sản phẩm" as UC6
+  usecase "Xem chi tiết sản phẩm" as UC7
+  usecase "Chọn size, màu (biến thể)" as UC8
+}
+
+' Use Cases - Shopping
+rectangle "Mua hàng" {
+  usecase "Thêm vào giỏ hàng" as UC9
+  usecase "Xem & chỉnh sửa giỏ hàng" as UC10
+  usecase "Nhập mã giảm giá" as UC11
+  usecase "Nhập địa chỉ giao hàng" as UC12
+  usecase "Đặt hàng" as UC13
+}
+
+' Use Cases - Order Management
+rectangle "Quản lý Đơn hàng" {
+  usecase "Xem lịch sử đơn hàng" as UC14
+}
+
+' Use Cases - System Administration
+rectangle "Quản trị Hệ thống" {
+  usecase "Quản lý sản phẩm" as UC15
+  usecase "Quản lý danh mục sản phẩm" as UC16
+  usecase "Quản lý biến thể sản phẩm" as UC17
+  usecase "Quản lý đơn hàng" as UC18
+  usecase "Quản lý người dùng" as UC19
+}
+
+' Relationships - Admin
+admin --> UC1
+admin --> UC3
+admin --> UC4
+admin --> UC8
+admin --> UC11
+admin --> UC14
+admin --> UC15
+admin --> UC16
+admin --> UC17
+admin --> UC18
+admin --> UC19
+
+' Relationships - Client
+client --> UC1
+client --> UC3
+client --> UC4
+client --> UC5
+client --> UC6
+client --> UC7
+client --> UC8
+client --> UC9
+client --> UC10
+client --> UC11
+client --> UC12
+client --> UC13
+client --> UC14
+
+' Relationships - Guest
+guest --> UC1
+guest --> UC2
+guest --> UC3
+guest --> UC5
+guest --> UC6
+guest --> UC7
+guest --> UC8
+
+' Include relationships
+UC15 ..> UC16 : <<include>>
+UC15 ..> UC17 : <<include>>
+UC13 ..> UC10 : <<include>>
+UC13 ..> UC12 : <<include>>
+UC9 ..> UC8 : <<include>>
+
+' Notes
+note right of UC2
+  Guest: Tạo tài khoản mới
+  Client: Đã đăng ký, không dùng lại
+  Admin: Không có chức năng này
+end note
+
+note right of UC9
+  Chỉ Client mới có thể
+  thêm vào giỏ hàng
+end note
+
+note right of UC15
+  Chỉ Admin có quyền
+  quản lý sản phẩm
+end note
+
+@enduml
